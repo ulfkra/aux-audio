@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+function speak(text) {
+  var u = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(u);
+}
+window.onload = function() {
+  const params = new URLSearchParams(window.location.search);
+  const t = params.get("text");
+  if (t) speak(decodeURIComponent(t));
+};
+</script>
+</body>
+</html>

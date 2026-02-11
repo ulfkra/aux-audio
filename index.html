@@ -4,11 +4,26 @@
 <script>
 function speak(text) {
   var u = new SpeechSynthesisUtterance(text);
+
+  // Pick a Greek voice if available
+  var voices = speechSynthesis.getVoices();
+  for (var i = 0; i < voices.length; i++) {
+    if (voices[i].lang === 'el-GR') {
+      u.voice = voices[i];
+      break;
+    }
+  }
+
+  u.rate = 0.7;   // optional: slower speed
+  u.pitch = 1.0;  // optional: adjust pitch
+  speechSynthesis.cancel();
   speechSynthesis.speak(u);
 }
+
+// Get text from URL parameter
 window.onload = function() {
-  const params = new URLSearchParams(window.location.search);
-  const t = params.get("text");
+  var params = new URLSearchParams(window.location.search);
+  var t = params.get("text");
   if (t) speak(decodeURIComponent(t));
 };
 </script>
